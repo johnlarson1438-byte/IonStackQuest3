@@ -428,14 +428,16 @@ def generate_config(results: dict, output_path: str = None):
           "slide_loggers_0_1_off", "slide_nfulnl_logger_off"]),
     ]
 
-    for key in keys:
-        r = results.get(key)
-        if r:
-            offset_str = f"0x{r['offset']:08x}"
-        else:
-            offset_str = "0x00000000"
-        lines.append(f"{key:30s} = {offset_str}")
-    lines.append("")
+    for comment, keys in groups:
+        lines.append(comment)
+        for key in keys:
+            r = results.get(key)
+            if r:
+                offset_str = f"0x{r['offset']:08x}"
+            else:
+                offset_str = "0x00000000"
+            lines.append(f"{key:30s} = {offset_str}")
+        lines.append("")
 
     output = "\n".join(lines)
 
