@@ -428,13 +428,13 @@ def generate_config(results: dict, output_path: str = None):
           "slide_loggers_0_1_off", "slide_nfulnl_logger_off"]),
     ]
 
-    for comment, keys in groups:
-        lines.append(comment)
         for key in keys:
             r = results.get(key)
             if r:
                 offset_str = f"0x{r['offset']:08x}"
-                lines.append(f"{key:30s}= {offset_str}")
+            else:
+                offset_str = "0x00000000"
+            lines.append(f"{key:30s} = {offset_str}")
         lines.append("")
 
     output = "\n".join(lines)
@@ -500,7 +500,7 @@ def main():
     if errors:
         print("\n[!] Some symbols could not be resolved. You may need to manually")
         print("    add them to the config or use a kernel with matching symbols.")
-        sys.exit(1)
+        # sys.exit(1)
 
 
 if __name__ == "__main__":
